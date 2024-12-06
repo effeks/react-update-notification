@@ -52,8 +52,9 @@ function generate(argv) {
   }
 
   const loadedIndex = cheerio.load(indexFile.toString());
+  loadedIndex('head').find("#react-update-notification").remove();
   loadedIndex('head').append(
-    `<script>window.__APP_VERSION__ = "${appVersion}"; window.__APP_VERSION_FILE__ = "${argv.p}${argv.v}"</script>`,
+    `<script id="react-update-notification">window.__APP_VERSION__ = "${appVersion}"; window.__APP_VERSION_FILE__ = "${argv.p}${argv.v}"</script>`,
   );
   fs.writeFileSync(indexPath, loadedIndex.html());
 }
